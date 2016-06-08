@@ -29,7 +29,6 @@ static const CGFloat SVProgressHUDDefaultAnimationDuration = 0.15;
 
 @interface SVProgressHUD ()
 
-@property (nonatomic, strong, readonly) NSTimer *fadeOutTimer;
 @property (nonatomic, readonly, getter = isClear) BOOL clear;
 
 @property (nonatomic, strong) UIControl *overlayView;
