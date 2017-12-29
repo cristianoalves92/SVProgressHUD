@@ -591,20 +591,26 @@ static const CGFloat SVProgressHUDDefaultAnimationDuration = 0.15;
 
 - (void)updateViewHierachy {
     // Add the overlay (e.g. black, gradient) to the application window if necessary
+    
+    
     if(!self.overlayView.superview) {
 #if !defined(SV_APP_EXTENSIONS)
-        // Default case: iterate over UIApplication windows
-        NSEnumerator *frontToBackWindows = [UIApplication.sharedApplication.windows reverseObjectEnumerator];
-        for (UIWindow *window in frontToBackWindows) {
-            BOOL windowOnMainScreen = window.screen == UIScreen.mainScreen;
-            BOOL windowIsVisible = !window.hidden && window.alpha > 0;
-            BOOL windowLevelNormal = window.windowLevel == UIWindowLevelNormal;
-            
-            if(windowOnMainScreen && windowIsVisible && windowLevelNormal) {
-                [window addSubview:self.overlayView];
-                break;
-            }
-        }
+        
+        UIWindow * window = [UIApplication.sharedApplication keyWindow];
+        [window addSubview:self.overlayView];
+        //        // Default case: iterate over UIApplication windows
+        //        NSEnumerator *frontToBackWindows = [UIApplication.sharedApplication.windows reverseObjectEnumerator];
+        //        for (UIWindow *window in frontToBackWindows) {
+        //            BOOL windowOnMainScreen = window.screen == UIScreen.mainScreen;
+        //            BOOL windowIsVisible = !window.hidden && window.alpha > 0;
+        //
+        //            BOOL windowLevelNormal = window.windowLevel == UIWindowLevelStatusBar || UIWindowLevelNormal;
+        //            NSLog(@"%b", windowOnMainScreen);
+        //            if(windowOnMainScreen && windowIsVisible && windowLevelNormal) {
+        //                [window addSubview:self.overlayView];
+        //                break;
+        //            }
+        //        }
 #else
         // If SVProgressHUD ist used inside an app extension add it to the given view
         if(self.viewForExtension) {
@@ -627,6 +633,7 @@ static const CGFloat SVProgressHUDDefaultAnimationDuration = 0.15;
         [self addSubview:self.hudView];
     }
 }
+
 
 - (void)setStatus:(NSString*)status {
     self.statusLabel.text = status;
